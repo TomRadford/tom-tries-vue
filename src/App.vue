@@ -8,6 +8,21 @@ const count = ref(0)
 const handleClick = () => {
   count.value++
 }
+
+const id = 'dklfl'
+const className = 'lol'
+const buttonDisabled = false
+const date = new Date().toTimeString()
+
+const magicEvent = 'onMagic'
+const idAttr = 'id'
+const htmlValue = '<h1>hii</h1>'
+
+const objOfAttrs = {
+  id: 'wrapper',
+  class: 'wrapper',
+  style: 'background-color:green',
+}
 </script>
 
 <template>
@@ -16,8 +31,20 @@ const handleClick = () => {
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-      <button @click="handleClick">{{ count }}</button>
-
+      <div>
+        <button :[idAttr]="`hiiii`" :disabled="buttonDisabled" @click="handleClick">
+          {{ count }}
+        </button>
+        <p>{{ count % 2 === 0 ? 'even' : 'odd' }}</p>
+        <br />
+        <!-- magicEvent will obvs never fire hehe -->
+        <div @[magicEvent]="handleClick" :class="className" :id>hi</div>
+        <div v-html="htmlValue"></div>
+        <div v-bind="objOfAttrs">i have attrs in an obj</div>
+        <time :datetime="date">
+          {{ date }}
+        </time>
+      </div>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
