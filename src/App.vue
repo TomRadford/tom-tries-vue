@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { handleClick } from './clickHandler'
 
 const count = ref(0)
 
-const handleClick = () => {
-  count.value++
+const event = () => {
+  handleClick(count)
 }
+// non-primitive refs get converted to reactive under-the-hood
+const book = ref({ title: 'Vue 3 Guide' })
+
+const goats = ref([{ name: 'Evan You' }, { name: 'Rich Harris' }])
+
+const goatCount = computed(() => goats.value.length)
 
 const id = 'dklfl'
 const className = 'lol'
@@ -32,7 +39,7 @@ const objOfAttrs = {
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
       <div>
-        <button :[idAttr]="`hiiii`" :disabled="buttonDisabled" @click="handleClick">
+        <button :[idAttr]="`hiiii`" :disabled="buttonDisabled" @click="event">
           {{ count }}
         </button>
         <p>{{ count % 2 === 0 ? 'even' : 'odd' }}</p>
@@ -44,6 +51,9 @@ const objOfAttrs = {
         <time :datetime="date">
           {{ date }}
         </time>
+        <p>my book: {{ book.title }}</p>
+        <input type="text" v-model="book.title" />
+        <p>goat count: {{ goatCount }}</p>
       </div>
       <nav>
         <RouterLink to="/">Home</RouterLink>
